@@ -5,25 +5,57 @@ let arr = [
   [[1, 1], [0, 0], [0, 0], [4, 8]]
 ]
 
+// function detectPositions(arr: any){
+//   let size = arr[0].length
+//   let positions = []
 
-function transpose(arr: any) {
+//   for(let i=0; i < arr.length; i++){
+//     const subArr = arr[i]
+//     if (positions[i] !== undefined) break
+//     for (let j = 0;j < subArr.length;j++) {
+      
 
-  let transposeArr: any[][]
-  transposeArr = []
+//       const item = subArr[j]
+//       const total = item[0] + item[1]
+      
+//       if (total > 0) {
+//         console.log("rank item: ", item);
+//         console.log("positions: ", positions[i], i);
+//         positions[i] = item
+//       }
+      
+//       //console.log("item: ", item);
+//       // console.log("total: ", total);
+//       // console.log("positions: ", positions[i]);
+//     }
+//   }
 
-  arr.reduce((first: any, subItems: any, firstIndex: number) => {
-    transposeArr[firstIndex] = []
-    subItems.reduce((second: any, item: any, index: number) => {
-      //transposeArr[index][firstIndex] = item
+//   return positions
+  
+// }
 
-      //console.log("item: ", item)
-      // console.log("index: ", index)
-    }, [])
+// console.log(detectPositions(arr))
 
-  }, [])
 
-  return transposeArr
-}
 
-console.log(transpose(arr));
-//console.log("arr: ", );
+// function transpose(arr: any) {
+
+//   let transposeArr: any[][]
+//   transposeArr = []
+
+//   arr.reduce((first: any, subItems: any, firstIndex: number) => {
+//     transposeArr[firstIndex] = []
+//     subItems.reduce((second: any, item: any, index: number) => {
+//       //transposeArr[index][firstIndex] = item
+
+//       //console.log("item: ", item)
+//       // console.log("index: ", index)
+//     }, [])
+
+//   }, [])
+
+//   return transposeArr
+// }
+
+// console.log(transpose(arr));
+// //console.log("arr: ", );
