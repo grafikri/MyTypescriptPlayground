@@ -1,7 +1,7 @@
 
 
 const text = "Bugün güzel bir gün"
-const search = "bugün bir güzel"
+const search = "bu bi gün"
 
 function findSearchIndexes(text, search) {
   const arrText = text.toLocaleLowerCase("tr").split(" ")
@@ -103,12 +103,26 @@ function determinePositions(arr) {
 //   [[1, 1], [0, 0], [0, 0], [4, 8]]
 // ]
 
+
+function replacedText(arrText, arrPosition, tagName = "span", className = "bold") {
+  return arrText.map((item, index) => {
+    let firstPosition = arrPosition[index][0]
+    let lastPosition = arrPosition[index][1]
+    if (firstPosition == 0 && lastPosition == 0) {
+      return item
+    } else {
+      return item.substr(0, firstPosition) + `<${tagName} class="${className}">` + item.substr(firstPosition, lastPosition) + `</${tagName}>` + item.substr(lastPosition, item.length - lastPosition)
+    }
+  })
+}
+
 let arr = findSearchIndexes(text, search)
 let { arrText, arrSearch } = arr
 let positions = detectIndexes(arrText, arrSearch)
 let arrTranspose = transpose(positions)
 let results = determinePositions(arrTranspose)
+let modifiedText = replacedText(arrText, results)
+console.log(modifiedText.join(" "))
 
-
-console.log("pos: ", positions);
-console.log("result: ", results);
+// console.log("pos: ", positions);
+// console.log("result: ", results);
