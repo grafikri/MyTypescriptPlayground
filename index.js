@@ -1,26 +1,53 @@
-let arr = [
-  [[0, 0], [0, 0], [0, 0], [2, 4]],
-  [[1, 5], [1, 1], [0, 0], [4, 8]],
-  [[3, 4], [0, 0], [0, 0], [4, 8]],
-  [[1, 1], [0, 0], [0, 0], [4, 8]]
-]
+
+
+const text = "Bugün güzel bir gün"
+const search = "gün ün"
+
+function findSearchIndexes(text, search) {
+  const arrText = text.toLocaleLowerCase("tr").split(" ")
+  const arrSearch = search.toLocaleLowerCase("tr").split(" ")
+
+  let positions = []
+  for (i = 0; i < arrSearch.length; i++) {
+    const searhingItem = arrSearch[i]
+    positions[i] = []
+    for (j = 0; j < arrText.length; j++) {
+      let textItem = arrText[j]
+      let index = textItem.indexOf(searhingItem)
+
+
+      if (index !== -1) {
+        const firstPosition = index
+        const lastPosition = index + searhingItem.length
+        positions[i].push([firstPosition, lastPosition])
+      } else {
+        positions[i].push([0, 0])
+      }
+    }
+  }
+
+  return positions
+}
+
+
 
 function transpose(arr) {
-
   let arrTranspose = []
 
-  for (let i = 0;i < arr.length;i++) {
-    const subArr = arr[i]
+  let xPos = arr.length
+  let yPos = arr[0].length
+
+  for (let i = 0; i < yPos; i++) {
     arrTranspose[i] = []
-    for (let j = 0;j < subArr.length;j++) {
+    for (let j = 0; j < xPos; j++) {
       arrTranspose[i][j] = []
     }
   }
 
-  for (let i = 0;i < arr.length;i++) {
-    const subArr = arr[i]
-    for (let j = 0;j < subArr.length;j++) {
-      const item = subArr[j]
+  for (let i = 0; i < arr.length; i++) {
+    let subArr = arr[i]
+    for (let j = 0; j < subArr.length; j++) {
+      let item = subArr[j]
       arrTranspose[j][i] = item
     }
   }
@@ -31,26 +58,26 @@ function transpose(arr) {
 
 
 
-function detectPositions(arr){
+function detectPositions(arr) {
 
   let positions = []
 
-  for (let i = 0;i < arr.length; i++) {
+  for (let i = 0; i < arr.length; i++) {
     const subArr = arr[i]
-    for (let j = 0;j < subArr.length;j++) {
+    for (let j = 0; j < subArr.length; j++) {
       const item = subArr[j]
       const total = item[0] + item[1]
 
-      if(positions[i] !== undefined) break
+      if (positions[i] !== undefined) break
 
-      if(total > 0){
+      if (total > 0) {
         positions[i] = item
         break
       }
 
-      const isLastItem = subArr.length -1 === j
+      const isLastItem = subArr.length - 1 === j
 
-      if(isLastItem && total === 0){
+      if (isLastItem && total === 0) {
         positions[i] = item
         break
       }
@@ -61,7 +88,18 @@ function detectPositions(arr){
 }
 
 
-let arrTranspose = transpose(arr)
-let positions = detectPositions(arrTranspose)
+let arr = [
+  [[0, 0], [0, 0], [0, 0], [2, 4]],
+  [[1, 5], [1, 1], [0, 0], [4, 8]],
+  [[3, 4], [0, 0], [0, 0], [4, 8]],
+  [[1, 1], [0, 0], [0, 0], [4, 8]]
+]
 
+let positions = findSearchIndexes(text, search)
 console.log("pos: ", positions);
+let arrTranspose = transpose(positions)
+
+console.log("trans: ", arrTranspose);
+// let results = detectPositions(arrTranspose)
+
+// console.log("pos: ", results);
