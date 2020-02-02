@@ -1,7 +1,7 @@
 
 
-const text = "Bugün güzel bir gün"
-const search = "bu bi gün"
+const text = "İstanbulda bugün hava güzel biliyormusun?"
+const search = "istanbulda hava bil"
 
 function findSearchIndexes(text, search) {
   const arrText = text.toLocaleLowerCase("tr").split(" ")
@@ -121,7 +121,7 @@ let { arrText, arrSearch } = arr
 let positions = detectIndexes(arrText, arrSearch)
 let arrTranspose = transpose(positions)
 let results = determinePositions(arrTranspose)
-let modifiedText = replacedText(arrText, results)
+let modifiedText = replacedText(text.split(" "), results)
 console.log(modifiedText.join(" "))
 
 // console.log("pos: ", positions);
