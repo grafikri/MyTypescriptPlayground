@@ -1,11 +1,19 @@
 
 
 const text = "Bugün güzel bir gün"
-const search = "gün ün"
+const search = "bugün bir güzel"
 
 function findSearchIndexes(text, search) {
   const arrText = text.toLocaleLowerCase("tr").split(" ")
   const arrSearch = search.toLocaleLowerCase("tr").split(" ")
+
+  return {
+    arrText,
+    arrSearch
+  }
+}
+
+function detectIndexes(arrText, arrSearch) {
 
   let positions = []
   for (i = 0; i < arrSearch.length; i++) {
@@ -58,7 +66,7 @@ function transpose(arr) {
 
 
 
-function detectPositions(arr) {
+function determinePositions(arr) {
 
   let positions = []
 
@@ -88,18 +96,19 @@ function detectPositions(arr) {
 }
 
 
-let arr = [
-  [[0, 0], [0, 0], [0, 0], [2, 4]],
-  [[1, 5], [1, 1], [0, 0], [4, 8]],
-  [[3, 4], [0, 0], [0, 0], [4, 8]],
-  [[1, 1], [0, 0], [0, 0], [4, 8]]
-]
+// let arr = [
+//   [[0, 0], [0, 0], [0, 0], [2, 4]],
+//   [[1, 5], [1, 1], [0, 0], [4, 8]],
+//   [[3, 4], [0, 0], [0, 0], [4, 8]],
+//   [[1, 1], [0, 0], [0, 0], [4, 8]]
+// ]
 
-let positions = findSearchIndexes(text, search)
-console.log("pos: ", positions);
+let arr = findSearchIndexes(text, search)
+let { arrText, arrSearch } = arr
+let positions = detectIndexes(arrText, arrSearch)
 let arrTranspose = transpose(positions)
+let results = determinePositions(arrTranspose)
 
-console.log("trans: ", arrTranspose);
-// let results = detectPositions(arrTranspose)
 
-// console.log("pos: ", results);
+console.log("pos: ", positions);
+console.log("result: ", results);
