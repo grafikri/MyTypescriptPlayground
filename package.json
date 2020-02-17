@@ -15,5 +15,9 @@
     "nodemon": "^2.0.2",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "@types/node": "^13.7.0",
+    "transpose-2d-array": "0.0.2"
   }
 }
