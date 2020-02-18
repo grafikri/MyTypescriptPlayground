@@ -1,19 +1,33 @@
-// const replacement = new ReplacementText({ language: "tr" })
+// const replacement = new HighlightText({ language: "tr" })
 // replacement.setTag()
 // const result = replacement.replace(text, search)
 
 import transpose from "transpose-2d-array"
 
-class ReplacementText {
-  public options = {}
+enum QuotationType {
+  Single,
+  Dobule
+}
 
-  constructor(incomingOptions = {}) {
-    const defaultOptions = {
+interface Options {
+  language: string
+  tag: string
+  className: string
+  quotation: QuotationType
+}
+
+class HighlightText {
+  public options: Options
+
+  constructor(options?: Options) {
+    const defaultOptions: Options = {
       language: "tr",
-      tag: "span"
+      tag: "span",
+      className: "highlight-text",
+      quotation: QuotationType.Dobule
     }
 
-    this.options = { ...defaultOptions, ...incomingOptions }
+    this.options = { ...defaultOptions, ...options }
   }
 
   replace(text: string, search: string) {
@@ -27,8 +41,10 @@ class ReplacementText {
   }
 
   private findSearchIndexes(text: string, search: string) {
-    const arrText: string[] = text.toLocaleLowerCase("tr").split(" ")
-    const arrSearch: string[] = search.toLocaleLowerCase("tr").split(" ")
+    const language = this.options.language
+
+    const arrText: string[] = text.toLocaleLowerCase(language).split(" ")
+    const arrSearch: string[] = search.toLocaleLowerCase(language).split(" ")
 
     return {
       arrText,
@@ -89,8 +105,8 @@ class ReplacementText {
   replacedText(
     arrText: any[],
     arrPosition: any[],
-    tagName = "span",
-    className = "bold"
+    tagName = this.options.tag,
+    className = this.options.className
   ) {
     return arrText.map((item, index) => {
       let firstPosition = arrPosition[index][0]
@@ -98,9 +114,16 @@ class ReplacementText {
       if (firstPosition == 0 && lastPosition == 0) {
         return item
       } else {
+        const quotation =
+          this.options.quotation === QuotationType.Single ? "'" : '"'
+
         return (
           item.substr(0, firstPosition) +
-          `<${tagName} class="${className}">` +
+          `<${tagName} class=` +
+          quotation +
+          `${className}` +
+          quotation +
+          `>` +
           item.substr(firstPosition, lastPosition) +
           `</${tagName}>` +
           item.substr(lastPosition, item.length - lastPosition)
@@ -110,5 +133,8 @@ class ReplacementText {
   }
 }
 
-const engine = new ReplacementText()
-const result = engine.replace("Bugün hava çok güzel", "Bugün güzel ava")
+const highlight = new HighlightText()
+// const result = highlight.replace("Bugün hava çok güzel", "Bugün güzel ava")
+const result = highlight.replace("Have a nice day", "day ave")
+
+console.log("result: ", result)
